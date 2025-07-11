@@ -9,12 +9,19 @@ const addTodoForm = addTodoPopup.querySelector(".popup__form");
 const addTodoCloseBtn = addTodoPopup.querySelector(".popup__close");
 const todoTemplate = document.querySelector("#todo-template");
 const todosList = document.querySelector(".todos__list");
+const formValidator = new FormValidator(validationConfig, addTodoForm);
+
+const handleEscapeClose = (evt) => {
+  if (evt.key === "Escape") closeModal(addTodoPopup);
+};
 
 const openModal = (modal) => {
   modal.classList.add("popup_visible");
+  document.addEventListener("keydown", handleEscapeClose);
 };
 
 const closeModal = (modal) => {
+  document.removeEventListener("keydown", handleEscapeClose);
   modal.classList.remove("popup_visible");
 };
 
@@ -93,5 +100,4 @@ initialTodos.forEach((item) => {
   // todosList.append(todo);
 });
 
-const formValidator = new FormValidator(validationConfig, addTodoForm);
 formValidator.enableValidation();
