@@ -66,6 +66,7 @@ addTodoCloseBtn.addEventListener("click", () => {
 addTodoForm.addEventListener("submit", (evt) => {
   evt.preventDefault();
   const id = uuidv4();
+  console.log(id);
 
   const name = evt.target.name.value;
   const dateInput = evt.target.date.value;
