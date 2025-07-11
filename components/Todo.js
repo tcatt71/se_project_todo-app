@@ -42,6 +42,7 @@ class Todo {
     todoNameEl.textContent = this._name;
     this._setInputIDs(todoCheckboxEl, todoLabel);
     this._displayDueDate(todoDate);
+    this._setEventListeners();
 
     return this._todoElement;
   }
