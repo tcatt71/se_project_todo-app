@@ -11,17 +11,17 @@ const todoTemplate = document.querySelector("#todo-template");
 const todosList = document.querySelector(".todos__list");
 const formValidator = new FormValidator(validationConfig, addTodoForm);
 
-const handleEscapeClose = (evt) => {
+const handleEscapeKeydown = (evt) => {
   if (evt.key === "Escape") closeModal(addTodoPopup);
 };
 
 const openModal = (modal) => {
   modal.classList.add("popup_visible");
-  document.addEventListener("keydown", handleEscapeClose);
+  document.addEventListener("keydown", handleEscapeKeydown);
 };
 
 const closeModal = (modal) => {
-  document.removeEventListener("keydown", handleEscapeClose);
+  document.removeEventListener("keydown", handleEscapeKeydown);
   modal.classList.remove("popup_visible");
 };
 
