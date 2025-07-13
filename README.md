@@ -12,6 +12,4 @@ This app is made with HTMAL, CSS, and JavaScript using OOP.
 
 ## Deployment
 
-This project is deployed on GitHub Pages:
-
-(https://tcatt71.github.io/se_project_todo-app/)
+This project is deployed on GitHub Pages: https://tcatt71.github.io/se_project_todo-app/
