@@ -1,17 +1,17 @@
 # Simple Todo App
 
-Give a brief description of the project here. Feel free to give it a different name.
+Check off your daily to-dos with this Simple Todo App!
 
 ## Functionality
 
-Give a more detailed explanation of the project and its functionality.
+With this Simple Todo App you can add, delete, mark as completed and set due dates for all you to-dos right on your phone, laptop or desktop!
 
 ## Technology
 
-Give a description of the technologies and techniques used. Pictures, GIFs, or screenshots that detail the project features are recommended.
+This app is made with HTMAL, CSS, and JavaScript using OOP.
 
 ## Deployment
 
 This project is deployed on GitHub Pages:
 
-- ADD LINK HERE
+(https://tcatt71.github.io/se_project_todo-app/)
