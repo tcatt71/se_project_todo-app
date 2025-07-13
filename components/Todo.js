@@ -1,10 +1,12 @@
 class Todo {
-  constructor(data, selector) {
+  constructor(data, selector, counter) {
     this._id = data.id;
     this._name = data.name;
     this._completed = data.completed;
     this._date = data.date;
     this._todoElement = selector.content.querySelector(".todo").cloneNode(true);
+    this._todoCheckboxEl = this._todoElement.querySelector(".todo__completed");
+    this._counter = counter;
   }
 
   // Apply id and for attributes.
@@ -29,18 +31,26 @@ class Todo {
 
   _setEventListeners() {
     const todoDeleteBtn = this._todoElement.querySelector(".todo__delete-btn");
-    todoDeleteBtn.addEventListener("click", () => this._todoElement.remove());
+
+    todoDeleteBtn.addEventListener("click", () => {
+      this._todoElement.remove();
+      this._counter.updateCounter();
+    });
+
+    this._todoCheckboxEl.addEventListener(
+      "change",
+      this._counter.updateCounter
+    );
   }
 
   getView() {
-    const todoCheckboxEl = this._todoElement.querySelector(".todo__completed");
     const todoNameEl = this._todoElement.querySelector(".todo__name");
     const todoLabel = this._todoElement.querySelector(".todo__label");
     const todoDate = this._todoElement.querySelector(".todo__date");
 
-    todoCheckboxEl.checked = this._completed;
+    this._todoCheckboxEl.checked = this._completed;
     todoNameEl.textContent = this._name;
-    this._setInputIDs(todoCheckboxEl, todoLabel);
+    this._setInputIDs(this._todoCheckboxEl, todoLabel);
     this._displayDueDate(todoDate);
     this._setEventListeners();
 

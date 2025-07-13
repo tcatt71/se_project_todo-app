@@ -2,6 +2,7 @@ import { initialTodos, validationConfig } from "../utils/constants.js";
 import Todo from "../components/Todo.js";
 import { v4 as uuidv4 } from "https://jspm.dev/uuid";
 import FormValidator from "../components/FormValidator.js";
+import Counter from "../components/Counter.js";
 
 const addTodoButton = document.querySelector(".button_action_add");
 const addTodoPopup = document.querySelector("#add-todo-popup");
@@ -10,6 +11,7 @@ const addTodoCloseBtn = addTodoPopup.querySelector(".popup__close");
 const todoTemplate = document.querySelector("#todo-template");
 const todosList = document.querySelector(".todos__list");
 const formValidator = new FormValidator(validationConfig, addTodoForm);
+const counter = new Counter();
 
 const handleEscapeKeydown = (evt) => {
   if (evt.key === "Escape") closeModal(addTodoPopup);
@@ -45,17 +47,19 @@ addTodoForm.addEventListener("submit", (evt) => {
   date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
 
   const values = { id, name, date };
-  const todo = new Todo(values, todoTemplate);
+  const todo = new Todo(values, todoTemplate, counter);
   const todoElement = todo.getView();
   todosList.append(todoElement);
   formValidator.resetValidation();
+  counter.updateCounter();
   closeModal(addTodoPopup);
 });
 
 initialTodos.forEach((item) => {
-  const todo = new Todo(item, todoTemplate);
+  const todo = new Todo(item, todoTemplate, counter);
   const todoElement = todo.getView();
   todosList.append(todoElement);
+  counter.updateCounter();
 });
 
 formValidator.enableValidation();
