@@ -1,5 +1,7 @@
 class Counter {
-  constructor() {}
+  constructor() {
+    this._counterText = document.querySelector(".counter__text");
+  }
 
   _getNumberOfTodos = () => {
     const todoList = document.querySelectorAll(".todo");
@@ -18,8 +20,7 @@ class Counter {
   };
 
   updateCounter = () => {
-    const counterText = document.querySelector(".counter__text");
-    counterText.textContent = this._getTextContent();
+    this._counterText.textContent = this._getTextContent();
   };
 }
 
