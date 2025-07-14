@@ -6,7 +6,7 @@ import Counter from "../components/Counter.js";
 
 const addTodoButton = document.querySelector(".button_action_add");
 const addTodoPopup = document.querySelector("#add-todo-popup");
-const addTodoForm = addTodoPopup.querySelector(".popup__form");
+const addTodoForm = document.forms["add-todo-form"];
 const addTodoCloseBtn = addTodoPopup.querySelector(".popup__close");
 const todoTemplate = document.querySelector("#todo-template");
 const todosList = document.querySelector(".todos__list");
@@ -25,6 +25,11 @@ const openModal = (modal) => {
 const closeModal = (modal) => {
   document.removeEventListener("keydown", handleEscapeKeydown);
   modal.classList.remove("popup_visible");
+};
+
+const renderTodo = (todo) => {
+  const todoElement = todo.getView();
+  todosList.append(todoElement);
 };
 
 addTodoButton.addEventListener("click", () => {
@@ -48,8 +53,7 @@ addTodoForm.addEventListener("submit", (evt) => {
 
   const values = { id, name, date };
   const todo = new Todo(values, todoTemplate, counter);
-  const todoElement = todo.getView();
-  todosList.append(todoElement);
+  renderTodo(todo);
   formValidator.resetValidation();
   counter.updateCounter();
   closeModal(addTodoPopup);
@@ -57,8 +61,7 @@ addTodoForm.addEventListener("submit", (evt) => {
 
 initialTodos.forEach((item) => {
   const todo = new Todo(item, todoTemplate, counter);
-  const todoElement = todo.getView();
-  todosList.append(todoElement);
+  renderTodo(todo);
   counter.updateCounter();
 });
 
