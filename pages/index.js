@@ -3,6 +3,7 @@ import Todo from "../components/Todo.js";
 import { v4 as uuidv4 } from "https://jspm.dev/uuid";
 import FormValidator from "../components/FormValidator.js";
 import Counter from "../components/Counter.js";
+import Section from "../utils/Section.js";
 
 const addTodoButton = document.querySelector(".button_action_add");
 const addTodoPopup = document.querySelector("#add-todo-popup");
@@ -12,6 +13,17 @@ const todoTemplate = document.querySelector("#todo-template");
 const todosList = document.querySelector(".todos__list");
 const formValidator = new FormValidator(validationConfig, addTodoForm);
 const counter = new Counter();
+
+const todoListSection = new Section({
+  items: initialTodos,
+  renderer: (item) => {
+    const todo = new Todo(item, todoTemplate, counter);
+    const todoElement = todo.getView();
+    todoListSection.addItem(todoElement);
+    counter.updateCounter();
+  },
+  containerSelector: todosList,
+});
 
 const handleEscapeKeydown = (evt) => {
   if (evt.key === "Escape") closeModal(addTodoPopup);
@@ -59,10 +71,11 @@ addTodoForm.addEventListener("submit", (evt) => {
   closeModal(addTodoPopup);
 });
 
-initialTodos.forEach((item) => {
-  const todo = new Todo(item, todoTemplate, counter);
-  renderTodo(todo);
-  counter.updateCounter();
-});
+// initialTodos.forEach((item) => {
+//   const todo = new Todo(item, todoTemplate, counter);
+//   renderTodo(todo);
+//   counter.updateCounter();
+// });
 
 formValidator.enableValidation();
+todoListSection.renderItems();
