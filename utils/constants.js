@@ -28,4 +28,16 @@ const validationConfig = {
   inactiveButtonClass: "button_disabled",
 };
 
-export { initialTodos, validationConfig };
+const sectionConfig = { todoListSelector: ".todos__list" };
+const todoConfig = { todoTemplate: "#todo-template" };
+const counterConfig = { textSelector: ".counter__text" };
+const popupWithFormConfig = { formPopupSelector: "#add-todo-popup" };
+
+export {
+  initialTodos,
+  validationConfig,
+  sectionConfig,
+  todoConfig,
+  counterConfig,
+  popupWithFormConfig,
+};

@@ -1,27 +1,29 @@
 class Counter {
-  constructor() {
-    this._counterText = document.querySelector(".counter__text");
+  constructor(todos, selector) {
+    this._element = document.querySelector(selector);
+    this._completed = todos.filter((todo) => (todo.completed = true)).length;
+    this._total = todos.length;
+
+    this._updateText();
   }
 
-  _getNumberOfTodos = () => {
-    const todoList = document.querySelectorAll(".todo");
-    return todoList.length;
+  updateCompleted = (increment) => {
+    if (increment) {
+      this._completed++;
+    } else {
+      this._completed--;
+    }
+    this._updateText();
   };
 
-  _getNumberOfCompletedTodos = () => {
-    const todosCompleted = document.querySelectorAll(
-      ".todo__completed:checked"
-    );
-    return todosCompleted.length;
+  updateTotal = (increment) => {
+    increment ? this._total++ : this._total--;
+    this._updateText();
   };
 
-  _getTextContent = () => {
-    return `Showing ${this._getNumberOfCompletedTodos()} out of ${this._getNumberOfTodos()} completed`;
-  };
-
-  updateCounter = () => {
-    this._counterText.textContent = this._getTextContent();
-  };
+  _updateText() {
+    this._element.textContent = `Showing ${this._completed} out of ${this._total} completed`;
+  }
 }
 
 export default Counter;
