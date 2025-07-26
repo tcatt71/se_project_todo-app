@@ -1,10 +1,12 @@
 import {
   initialTodos,
   validationConfig,
-  sectionConfig,
-  todoConfig,
-  counterConfig,
-  popupWithFormConfig,
+  todoTemplate,
+  popupSelector,
+  todosList,
+  counterTextSelector,
+  addTodoButton,
+  addTodoForm,
 } from "../utils/constants.js";
 import Todo from "../components/Todo.js";
 import { v4 as uuidv4 } from "https://jspm.dev/uuid";
@@ -13,44 +15,39 @@ import Counter from "../components/Counter.js";
 import Section from "../components/Section.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 
-const addTodoButton = document.querySelector(".button_action_add");
-const addTodoForm = document.forms["add-todo-form"];
-const { todoListSelector } = sectionConfig;
-const { todoTemplate } = todoConfig;
-const { textSelector } = counterConfig;
-const { formPopupSelector } = popupWithFormConfig;
-
 const formValidator = new FormValidator(validationConfig, addTodoForm);
-const counter = new Counter(initialTodos, textSelector);
+const counter = new Counter(initialTodos, counterTextSelector);
 
-const popupWithForm = new PopupWithForm({
-  popupSelector: formPopupSelector,
-  handleFormSubmit: (evt) => {
-    evt.preventDefault();
-    const id = uuidv4();
+const popupWithForm = new PopupWithForm(
+  {
+    handleFormSubmit: (evt) => {
+      evt.preventDefault();
+      const id = uuidv4();
 
-    const formValues = popupWithForm._getInputValues();
-    const { name, date: dateInput } = formValues;
+      const formValues = popupWithForm._getInputValues();
+      const { name, date: dateInput } = formValues;
 
-    // Create a date object and adjust for timezone
-    const date = new Date(dateInput);
-    date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
+      // Create a date object and adjust for timezone
+      const date = new Date(dateInput);
+      date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
 
-    const values = { id, name, date };
-    renderTodo(values);
+      const values = { id, name, date };
+      renderTodo(values);
 
-    formValidator.resetValidation();
-    counter.updateTotal(true);
-    popupWithForm.close();
+      formValidator.resetValidation();
+      counter.updateTotal(true);
+      popupWithForm.close();
+    },
   },
-});
+  popupSelector
+);
 
 const todoListSection = new Section({
   items: initialTodos,
   renderer: (item) => {
     renderTodo(item);
   },
-  containerSelector: todoListSelector,
+  containerSelector: todosList,
 });
 
 function createTodo(item) {

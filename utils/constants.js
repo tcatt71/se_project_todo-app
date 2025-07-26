@@ -28,16 +28,20 @@ const validationConfig = {
   inactiveButtonClass: "button_disabled",
 };
 
-const sectionConfig = { todoListSelector: ".todos__list" };
-const todoConfig = { todoTemplate: "#todo-template" };
-const counterConfig = { textSelector: ".counter__text" };
-const popupWithFormConfig = { formPopupSelector: "#add-todo-popup" };
+const todoTemplate = "#todo-template";
+const popupSelector = "#add-todo-popup";
+const todosList = ".todos__list";
+const counterTextSelector = ".counter__text";
+const addTodoButton = document.querySelector(".button_action_add");
+const addTodoForm = document.forms["add-todo-form"];
 
 export {
   initialTodos,
   validationConfig,
-  sectionConfig,
-  todoConfig,
-  counterConfig,
-  popupWithFormConfig,
+  todoTemplate,
+  popupSelector,
+  todosList,
+  counterTextSelector,
+  addTodoButton,
+  addTodoForm,
 };
