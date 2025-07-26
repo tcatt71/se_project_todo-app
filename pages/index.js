@@ -2,7 +2,7 @@ import {
   initialTodos,
   validationConfig,
   todoTemplate,
-  popupSelector,
+  addTodoPopup,
   todosList,
   counterTextSelector,
   addTodoButton,
@@ -28,10 +28,9 @@ const popupWithForm = new PopupWithForm(
       const { name, date: dateInput } = formValues;
 
       // Create a date object and adjust for timezone
-      const date = new Date(dateInput);
-      date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
+      const formattedDate = getFormattedDate(dateInput);
+      const values = { id, name, formattedDate };
 
-      const values = { id, name, date };
       renderTodo(values);
 
       formValidator.resetValidation();
@@ -39,7 +38,7 @@ const popupWithForm = new PopupWithForm(
       popupWithForm.close();
     },
   },
-  popupSelector
+  addTodoPopup
 );
 
 const todoListSection = new Section({
@@ -72,6 +71,12 @@ function renderTodo(values) {
   const todo = createTodo(values);
   const todoElement = todo.getView();
   todoListSection.addItem(todoElement);
+}
+
+function getFormattedDate(dateString) {
+  const date = new Date(dateString);
+  date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
+  return date;
 }
 
 popupWithForm.setEventListeners();

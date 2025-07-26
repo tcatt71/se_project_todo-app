@@ -29,7 +29,7 @@ const validationConfig = {
 };
 
 const todoTemplate = "#todo-template";
-const popupSelector = "#add-todo-popup";
+const addTodoPopup = "#add-todo-popup";
 const todosList = ".todos__list";
 const counterTextSelector = ".counter__text";
 const addTodoButton = document.querySelector(".button_action_add");
@@ -39,7 +39,7 @@ export {
   initialTodos,
   validationConfig,
   todoTemplate,
-  popupSelector,
+  addTodoPopup,
   todosList,
   counterTextSelector,
   addTodoButton,
