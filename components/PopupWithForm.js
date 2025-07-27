@@ -15,7 +15,11 @@ class PopupWithForm extends Popup {
 
   setEventListeners() {
     const popupForm = document.forms["add-todo-form"];
-    popupForm.addEventListener("submit", (evt) => this._handleFormSubmit(evt));
+
+    popupForm.addEventListener("submit", (evt) => {
+      const formValues = this._getInputValues();
+      this._handleFormSubmit(evt, formValues);
+    });
     super.setEventListeners();
   }
 }

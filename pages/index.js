@@ -20,12 +20,11 @@ const counter = new TodoCounter(initialTodos, counterTextSelector);
 
 const popupWithForm = new PopupWithForm(
   {
-    handleFormSubmit: (evt) => {
+    handleFormSubmit: (evt, inputValues) => {
       evt.preventDefault();
       const id = uuidv4();
 
-      const formValues = popupWithForm._getInputValues();
-      const { name, date: dateInput } = formValues;
+      const { name, date: dateInput } = inputValues;
 
       // Create a date object and adjust for timezone
       const date = getFormattedDate(dateInput);
