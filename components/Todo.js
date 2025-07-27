@@ -7,19 +7,9 @@ class Todo {
     this._name = data.name;
     this._completed = data.completed;
     this._date = data.date;
-
     this._handleCheckboxChange = handleCheckboxChange;
     this._handleDeleteButtonClick = handleDeleteButtonClick;
-
-    this._todoTemplate = document.querySelector(selector);
-    this._todoElement = this._todoTemplate.content
-      .querySelector(".todo")
-      .cloneNode(true);
-    this._todoDeleteBtn = this._todoElement.querySelector(".todo__delete-btn");
-    this._todoCheckboxEl = this._todoElement.querySelector(".todo__completed");
-    this._todoNameEl = this._todoElement.querySelector(".todo__name");
-    this._todoLabel = this._todoElement.querySelector(".todo__label");
-    this._todoDate = this._todoElement.querySelector(".todo__date");
+    this._selector = selector;
   }
 
   // Apply id and for attributes.
@@ -42,22 +32,39 @@ class Todo {
     }
   }
 
+  _getTemplate() {
+    return document
+      .querySelector(this._selector)
+      .content.querySelector(".todo")
+      .cloneNode(true);
+  }
+
   _setEventListeners() {
-    this._todoDeleteBtn.addEventListener("click", () => {
+    this._deleteButton = this._todoElement.querySelector(".todo__delete-btn");
+
+    this._deleteButton.addEventListener("click", () => {
       this._todoElement.remove();
-      this._handleDeleteButtonClick(this._todoCheckboxEl);
+      this._handleDeleteButtonClick(this._checkbox);
     });
 
-    this._todoCheckboxEl.addEventListener("change", () =>
-      this._handleCheckboxChange(this._todoCheckboxEl)
+    this._checkbox.addEventListener("change", () =>
+      this._handleCheckboxChange(this._checkbox)
     );
   }
 
   getView() {
-    this._todoCheckboxEl.checked = this._completed;
-    this._todoNameEl.textContent = this._name;
-    this._setInputIDs(this._todoCheckboxEl, this._todoLabel);
-    this._displayDueDate(this._todoDate);
+    this._todoElement = this._getTemplate();
+
+    this._todoElement.querySelector(".todo__completed").checked =
+      this._completed;
+    this._todoElement.querySelector(".todo__name").textContent = this._name;
+
+    this._checkbox = this._todoElement.querySelector(".todo__completed");
+    this._label = this._todoElement.querySelector(".todo__label");
+    this._dateElement = this._todoElement.querySelector(".todo__date");
+
+    this._setInputIDs(this._checkbox, this._label);
+    this._displayDueDate(this._dateElement);
     this._setEventListeners();
 
     return this._todoElement;

@@ -28,8 +28,8 @@ const popupWithForm = new PopupWithForm(
       const { name, date: dateInput } = formValues;
 
       // Create a date object and adjust for timezone
-      const formattedDate = getFormattedDate(dateInput);
-      const values = { id, name, formattedDate };
+      const date = getFormattedDate(dateInput);
+      const values = { id, name, date };
 
       renderTodo(values);
 
@@ -73,12 +73,11 @@ function renderTodo(values) {
   todoListSection.addItem(todoElement);
 }
 
-function getFormattedDate(dateString) {
-  const date = new Date(dateString);
+function getFormattedDate(dateInput) {
+  const date = new Date(dateInput);
   date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
   return date;
 }
-
 popupWithForm.setEventListeners();
 addTodoButton.addEventListener("click", () => {
   popupWithForm.open();
