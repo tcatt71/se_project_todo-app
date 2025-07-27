@@ -11,12 +11,12 @@ import {
 import Todo from "../components/Todo.js";
 import { v4 as uuidv4 } from "https://jspm.dev/uuid";
 import FormValidator from "../components/FormValidator.js";
-import Counter from "../components/Counter.js";
+import TodoCounter from "../components/TodoCounter.js";
 import Section from "../components/Section.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 
 const formValidator = new FormValidator(validationConfig, addTodoForm);
-const counter = new Counter(initialTodos, counterTextSelector);
+const counter = new TodoCounter(initialTodos, counterTextSelector);
 
 const popupWithForm = new PopupWithForm(
   {
