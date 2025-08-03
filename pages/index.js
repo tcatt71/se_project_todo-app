@@ -20,20 +20,11 @@ const counter = new TodoCounter(initialTodos, counterTextSelector);
 
 const popupWithForm = new PopupWithForm(
   {
-    handleFormSubmit: (evt, inputValues) => {
+    handleFormSubmit: (evt, formValues) => {
       evt.preventDefault();
-      const id = uuidv4();
-
-      const { name, date: dateInput } = inputValues;
-
-      // Create a date object and adjust for timezone
-      const date = getFormattedDate(dateInput);
-      const values = { id, name, date };
-
-      renderTodo(values);
-
-      formValidator.resetValidation();
-      counter.updateTotal(true);
+      const todoObject = createTodoObject(formValues);
+      renderTodo(todoObject);
+      resetFormState();
       popupWithForm.close();
     },
   },
@@ -48,15 +39,31 @@ const todoListSection = new Section({
   containerSelector: todosList,
 });
 
-function createTodo(item) {
+function getUUID() {
+  return uuidv4();
+}
+
+function formatDate(dateInput) {
+  // Create a date object and adjust for timezone
+  const date = new Date(dateInput);
+  date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
+  return date;
+}
+
+function createTodoObject(formValues) {
+  const id = getUUID();
+  const { name, date: dateInput } = formValues;
+  const date = formatDate(dateInput);
+  return { id, name, date };
+}
+
+function createTodo(todoData) {
   return new Todo(
     {
-      data: item,
-      handleCheckboxChange: (checkbox) => {
-        checkbox.checked
-          ? counter.updateCompleted(true)
-          : counter.updateCompleted(false);
-      },
+      data: todoData,
+      handleCheckboxChange: (checkbox) =>
+        counter.updateCompleted(checkbox.checked),
+
       handleDeleteButtonClick: (checkbox) => {
         counter.updateTotal(false);
         if (checkbox.checked) counter.updateCompleted(false);
@@ -72,14 +79,18 @@ function renderTodo(values) {
   todoListSection.addItem(todoElement);
 }
 
-function getFormattedDate(dateInput) {
-  const date = new Date(dateInput);
-  date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
-  return date;
+function resetFormState() {
+  formValidator.resetValidation();
+  counter.updateTotal(true);
 }
-popupWithForm.setEventListeners();
-addTodoButton.addEventListener("click", () => {
-  popupWithForm.open();
-});
-formValidator.enableValidation();
-todoListSection.renderItems();
+
+function initializeApp() {
+  popupWithForm.setEventListeners();
+  addTodoButton.addEventListener("click", () => {
+    popupWithForm.open();
+  });
+  formValidator.enableValidation();
+  todoListSection.renderItems();
+}
+
+initializeApp();
